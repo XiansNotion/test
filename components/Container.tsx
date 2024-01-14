@@ -136,7 +136,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
             <SideTOC
               links={toc.links}
               minLevel={toc.minLevel}
-              frontMatter={toc.frontMatter}
               anchorName="notion-header-anchor"
             />
           )}
