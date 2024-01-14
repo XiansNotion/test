@@ -110,7 +110,7 @@ export const Layout: React.VFC<Props> = ({
       
       fullWidth={fullWidth}
       slug={slug}
-      frontMatter={post}
+      frontMatter={frontMatter} 
     >
       {renderContents()}
       <div
