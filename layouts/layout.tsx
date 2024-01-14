@@ -28,6 +28,10 @@ type Props = {
   onlyContents?: boolean;
   tweet?: typeof Tweet;
   slug?: string | null;
+  toc?: {
+    links: any;
+    minLevel: any;
+  };
 };
 
 export const Layout: React.VFC<Props> = ({
@@ -92,25 +96,23 @@ export const Layout: React.VFC<Props> = ({
   return onlyContents ? (
     renderContents()
   ) : (
-    <Container
-      layout="blog"
-      title={post.title}
-      description={post.summary}
-      date={new Date(post.createdTime).toISOString()}
-      type="article"
-
-      toc={
-        frontMatter.slug !== "about"
-          ? {
-              links: links,
-              minLevel: minLevel,
-            }
-          : {}
-      }
-      
-      fullWidth={fullWidth}
-      slug={slug}
-    >
+<Container
+  layout="blog"
+  title={post.title}
+  description={post.summary}
+  date={new Date(post.createdTime).toISOString()}
+  type="article"
+  toc={
+    frontMatter.slug !== "about"
+      ? {
+          links: links,
+          minLevel: minLevel,
+        }
+      : {}
+  }
+  fullWidth={fullWidth}
+  slug={slug}
+>
       {renderContents()}
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {
