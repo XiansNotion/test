@@ -41,29 +41,29 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
   }, [router]);
   const siteUrl = useMemo(() => {
     // tag detail page
-    if (meta?.isTagPage && meta?.slug) {
-      return `${url}/tag/${meta.slug}`;
+    if (customMeta?.isTagPage && customMeta?.slug) {
+      return `${url}/tag/${customMeta.slug}`;
     }
     // list page
-    if (!meta?.slug && !meta?.isTagPage) {
+    if (!customMeta?.slug && !customMeta?.isTagPage) {
       return url;
     }
     // detail page
-    if (meta?.slug && !meta?.isTagPage) {
-      return `${url}/${meta.slug}`;
+    if (customMeta?.slug && !customMeta?.isTagPage) {
+      return `${url}/${customMeta.slug}`;
     }
     return url;
-  }, [meta]);
+  }, [customMeta]);
   const siteTitle = useMemo(() => {
-    return meta.title ?? BLOG.title;
-  }, [meta]);
+    return customMeta.title ?? BLOG.title;
+  }, [customMeta]);
   useEffect(() => {
-    if (alreadySet || meta.type !== 'article' || !meta) return;
+    if (alreadySet || customMeta.type !== 'article' || !customMeta) return;
     setCustomMetaTags((prevCustomMetaTags) =>
       (prevCustomMetaTags ?? []).concat(
         {
           property: 'article:published_time',
-          content: meta?.date || meta?.createdTime || '',
+          content: customMeta?.date || customMeta?.createdTime || '',
         },
         {
           property: 'article:author',
@@ -72,7 +72,7 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
       ),
     );
     setAlreadySet(true);
-  }, [alreadySet, meta]);
+  }, [alreadySet, customMeta]);
   return (
     <div>
       <NextHeadSeo
