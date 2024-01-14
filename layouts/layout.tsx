@@ -24,15 +24,17 @@ type Props = {
   blockMap: ExtendedRecordMap;
   post: Post;
   emailHash: string;
-  fullWidth?: boolean;
-  onlyContents?: boolean;
   tweet?: typeof Tweet;
   slug?: string | null;
+  fullWidth?: boolean;
+  onlyContents?: boolean;
   toc?: {
     links: any;
     minLevel: any;
+    frontMatter: any; // 添加這個屬性
   };
 };
+
 
 export const Layout: React.VFC<Props> = ({
   blockMap,
@@ -103,6 +105,7 @@ export const Layout: React.VFC<Props> = ({
       description={post.summary}
       date={new Date(post.createdTime).toISOString()}
       type="article"
+      toc={toc}
       fullWidth={fullWidth}
       slug={slug}
     >
