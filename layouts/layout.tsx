@@ -13,7 +13,6 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
-import { useEffect, useRef, useState } from "react";
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
@@ -99,19 +98,8 @@ export const Layout: React.VFC<Props> = ({
       description={post.summary}
       date={new Date(post.createdTime).toISOString()}
       type="article"
-
-      toc={
-        frontMatter.slug !== "about"
-          ? {
-              links: links,
-              minLevel: minLevel,
-            }
-          : {}
-      }
-      
       fullWidth={fullWidth}
       slug={slug}
-      frontMatter={frontMatter} 
     >
       {renderContents()}
       <div
