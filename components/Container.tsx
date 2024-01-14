@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 import PropTypes from "prop-types";
 
 // 引入 SideTOC 和 Container
-const SideTOC = dynamic(() => import("../components/SideTOC"), { ssr: false });
+const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
 
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
