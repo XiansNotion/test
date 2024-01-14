@@ -76,15 +76,15 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
   return (
     <div>
       <NextHeadSeo
-        title={meta.title}
-        description={meta.description}
+        title={customMeta.title}
+        description={customMeta.description}
         robots={'index, follow'}
         canonical={siteUrl}
         og={{
-          title: meta.title,
+          title: customMeta.title,
           url: siteUrl,
           // locale: BLog.lang,
-          type: meta.type ?? 'website',
+          type: customMeta.type ?? 'website',
           description: meta.description,
           image: getOGImageURL({
             title: siteTitle,
