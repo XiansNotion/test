@@ -103,7 +103,6 @@ export const Layout: React.VFC<Props> = ({
       description={post.summary}
       date={new Date(post.createdTime).toISOString()}
       type="article"
-      toc={toc} // 傳遞 toc 屬性
       fullWidth={fullWidth}
       slug={slug}
     >
@@ -126,6 +125,21 @@ export const Layout: React.VFC<Props> = ({
           ↑ {locale?.POST.TOP}
         </button>
       </div>
+      
+            {toc && (
+        <div>
+          {      toc={
+        frontMatter.slug !== "about"
+          ? {
+              links: links,
+              minLevel: minLevel,
+            }
+          : {}
+      }
+      fullWidth={fullWidth}}
+        </div>
+      )}
+      
       <Comments post={post} />
     </Container>
   );
