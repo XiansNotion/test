@@ -25,16 +25,16 @@ const SideTOC: React.FC<SideTOCProps> = ({
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const tocRef = useRef<HTMLDivElement>(null);
 
-  const getActiveLinkID = (): string | undefined => {
-    const anchors = Array.from(document.querySelectorAll(`.${anchorName}`));
-    const activeAnchors = anchors
-      .map((anchor) => ({
-        top: anchor.getBoundingClientRect().top,
-        id: anchor.id,
-      }))
-      .filter((item) => item.top <= 10)
-      .sort((a, b) => b.top - a.top);
-    return activeAnchors[0]?.id;
+  const getActiveLinkID = (): string | null => {
+  const anchors = Array.from(document.querySelectorAll(`.${anchorName}`));
+  const activeAnchors = anchors
+    .map((anchor) => ({
+      top: anchor.getBoundingClientRect().top,
+      id: anchor.id,
+    }))
+    .filter((item) => item.top <= 10)
+    .sort((a, b) => b.top - a.top);
+  return activeAnchors[0]?.id || null;
   };
 
   useEffect(() => {
