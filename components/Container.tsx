@@ -5,6 +5,12 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
+
+import PropTypes from "prop-types";
+import dynamic from "next/dynamic";
+
+const SideTOC = dynamic(() => import("../components/SideTOC"), { ssr: false });
+
 // import BlogPost from './BlogPost'
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
@@ -20,7 +26,7 @@ type Props = {
   isTagPage?: boolean;
 };
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) => {
+export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, ...customMeta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
@@ -125,6 +131,15 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         >
           {children}
         </main>
+                    <div className="flex-1">
+              {toc?.links?.length > 0 && (
+                <SideTOC
+                  links={toc.links}
+                  minLevel={toc.minLevel}
+                  anchorName="notion-header-anchor"
+                />
+              )}
+            </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>
