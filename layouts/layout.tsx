@@ -61,7 +61,7 @@ export const Layout: React.VFC<Props> = ({
             </a>
             <span className="block">&nbsp;/&nbsp;</span>
           </div>
-          <div className="mr-2 mb-4 md:ml-0">{formatDate(frontMatter?.date?.start_date || frontMatter.createdTime, BLOG.lang)}</div>
+          <div className="mr-2 mb-4 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
           {post.tags && (
             <div className="flex overflow-x-auto flex-nowrap max-w-full article-tags">
               {post.tags.map((tag) => (
