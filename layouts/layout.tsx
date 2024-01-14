@@ -98,16 +98,16 @@ export const Layout: React.VFC<Props> = ({
   return onlyContents ? (
     renderContents()
   ) : (
-    <Container
-      layout="blog"
-      title={post.title}
-      description={post.summary}
-      date={new Date(post.createdTime).toISOString()}
-      type="article"
-      toc={toc}
-      fullWidth={fullWidth}
-      slug={slug}
-    >
+<Container
+  layout="blog"
+  title={customMeta?.title ?? BLOG.title}
+  description={customMeta?.description}
+  date={new Date(customMeta?.date || customMeta?.createdTime).toISOString()}
+  type={customMeta?.type ?? 'article'}
+  fullWidth={fullWidth}
+  slug={customMeta?.slug}
+  toc={toc} // 傳遞 toc 屬性
+>
       {renderContents()}
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {
