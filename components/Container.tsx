@@ -24,7 +24,13 @@ type Props = {
   slug?: string | null;
   createdTime?: string;
   isTagPage?: boolean;
+  toc?: {
+    links: any;
+    minLevel: any;
+    frontMatter: any;
+  };
 };
+
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
 export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, ...customMeta }) => {
   const router = useRouter();
