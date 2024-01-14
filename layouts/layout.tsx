@@ -98,6 +98,16 @@ export const Layout: React.VFC<Props> = ({
       description={post.summary}
       date={new Date(post.createdTime).toISOString()}
       type="article"
+
+      toc={
+        frontMatter.slug !== "about"
+          ? {
+              links: links,
+              minLevel: minLevel,
+            }
+          : {}
+      }
+      
       fullWidth={fullWidth}
       slug={slug}
     >
