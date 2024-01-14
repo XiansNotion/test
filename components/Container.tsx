@@ -5,12 +5,6 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
-
-import PropTypes from "prop-types";
-import dynamic from "next/dynamic";
-
-const SideTOC = dynamic(() => import("../components/SideTOC"), { ssr: false });
-
 // import BlogPost from './BlogPost'
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
@@ -24,15 +18,9 @@ type Props = {
   slug?: string | null;
   createdTime?: string;
   isTagPage?: boolean;
-  toc?: {
-    links: any;
-    minLevel: any;
-    frontMatter: any;
-  };
 };
-
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, ...customMeta }) => {
+export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
@@ -41,29 +29,29 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
   }, [router]);
   const siteUrl = useMemo(() => {
     // tag detail page
-    if (customMeta?.isTagPage && customMeta?.slug) {
-      return `${url}/tag/${customMeta.slug}`;
+    if (meta?.isTagPage && meta?.slug) {
+      return `${url}/tag/${meta.slug}`;
     }
     // list page
-    if (!customMeta?.slug && !customMeta?.isTagPage) {
+    if (!meta?.slug && !meta?.isTagPage) {
       return url;
     }
     // detail page
-    if (customMeta?.slug && !customMeta?.isTagPage) {
-      return `${url}/${customMeta.slug}`;
+    if (meta?.slug && !meta?.isTagPage) {
+      return `${url}/${meta.slug}`;
     }
     return url;
-  }, [customMeta]);
+  }, [meta]);
   const siteTitle = useMemo(() => {
-    return customMeta.title ?? BLOG.title;
-  }, [customMeta]);
+    return meta.title ?? BLOG.title;
+  }, [meta]);
   useEffect(() => {
-    if (alreadySet || customMeta.type !== 'article' || !customMeta) return;
+    if (alreadySet || meta.type !== 'article' || !meta) return;
     setCustomMetaTags((prevCustomMetaTags) =>
       (prevCustomMetaTags ?? []).concat(
         {
           property: 'article:published_time',
-          content: customMeta?.date || customMeta?.createdTime || '',
+          content: meta?.date || meta?.createdTime || '',
         },
         {
           property: 'article:author',
@@ -72,20 +60,20 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
       ),
     );
     setAlreadySet(true);
-  }, [alreadySet, customMeta]);
+  }, [alreadySet, meta]);
   return (
     <div>
       <NextHeadSeo
-        title={customMeta.title}
-        description={customMeta.description}
+        title={meta.title}
+        description={meta.description}
         robots={'index, follow'}
         canonical={siteUrl}
         og={{
-          title: customMeta.title,
+          title: meta.title,
           url: siteUrl,
           // locale: BLog.lang,
-          type: customMeta.type ?? 'website',
-          description: customMeta.description,
+          type: meta.type ?? 'website',
+          description: meta.description,
           image: getOGImageURL({
             title: siteTitle,
             root,
@@ -137,15 +125,6 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
         >
           {children}
         </main>
-                    <div className="flex-1">
-              {toc?.links?.length > 0 && (
-                <SideTOC
-                  links={toc.links}
-                  minLevel={toc.minLevel}
-                  anchorName="notion-header-anchor"
-                />
-              )}
-            </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>
