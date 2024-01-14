@@ -128,18 +128,11 @@ export const Layout: React.VFC<Props> = ({
           ↑ {locale?.POST.TOP}
         </button>
       </div>
-      
-            {toc && (
+      {toc && toc.frontMatter && (
         <div>
-          {      toc={
-        frontMatter.slug !== "about"
-          ? {
-              links: links,
-              minLevel: minLevel,
-            }
-          : {}
-      }
-      fullWidth={fullWidth}}
+          {/* 在這裡使用 toc.frontMatter，如果它存在的話 */}
+        </div>
+      )}
         </div>
       )}
       
