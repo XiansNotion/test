@@ -33,7 +33,6 @@ type Props = {
 export const Layout: React.VFC<Props> = ({
   blockMap,
   post,
-  frontMatter,
   emailHash,
   tweet,
   slug,
