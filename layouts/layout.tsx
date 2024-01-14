@@ -24,15 +24,10 @@ type Props = {
   blockMap: ExtendedRecordMap;
   post: Post;
   emailHash: string;
-  tweet?: typeof Tweet;
-  slug?: string | null;
   fullWidth?: boolean;
   onlyContents?: boolean;
-  toc?: {
-    links: any;
-    minLevel: any;
-    frontMatter: any;
-  };
+  tweet?: typeof Tweet;
+  slug?: string | null;
 };
 
 export const Layout: React.VFC<Props> = ({
@@ -43,7 +38,6 @@ export const Layout: React.VFC<Props> = ({
   slug,
   fullWidth = false,
   onlyContents = false,
-  toc,
 }) => {
   const locale = useLocale();
   const router = useRouter();
@@ -98,16 +92,15 @@ export const Layout: React.VFC<Props> = ({
   return onlyContents ? (
     renderContents()
   ) : (
-<Container
-  layout="blog"
-  title={customMeta?.title ?? BLOG.title}
-  description={customMeta?.description}
-  date={new Date(customMeta?.date || customMeta?.createdTime).toISOString()}
-  type={customMeta?.type ?? 'article'}
-  fullWidth={fullWidth}
-  slug={customMeta?.slug}
-  toc={toc} // 傳遞 toc 屬性
->
+    <Container
+      layout="blog"
+      title={post.title}
+      description={post.summary}
+      date={new Date(post.createdTime).toISOString()}
+      type="article"
+      fullWidth={fullWidth}
+      slug={slug}
+    >
       {renderContents()}
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {
@@ -127,14 +120,6 @@ export const Layout: React.VFC<Props> = ({
           ↑ {locale?.POST.TOP}
         </button>
       </div>
-      {toc && toc.frontMatter && (
-        <div>
-          {/* 在這裡使用 toc.frontMatter，如果它存在的話 */}
-        </div>
-      )}
-        </div>
-      )}
-      
       <Comments post={post} />
     </Container>
   );
