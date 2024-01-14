@@ -85,7 +85,7 @@ export const Container: React.VFC<Props> = ({ children, layout, fullWidth, toc, 
           url: siteUrl,
           // locale: BLog.lang,
           type: customMeta.type ?? 'website',
-          description: meta.description,
+          description: customMeta.description,
           image: getOGImageURL({
             title: siteTitle,
             root,
