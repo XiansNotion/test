@@ -31,10 +31,9 @@ type Props = {
   toc?: {
     links: any;
     minLevel: any;
-    frontMatter: any; // 添加這個屬性
+    frontMatter: any;
   };
 };
-
 
 export const Layout: React.VFC<Props> = ({
   blockMap,
