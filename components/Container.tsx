@@ -123,13 +123,13 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
             <main
-              className={`relative ml-auto mr-auto flex-grow w-full transition-all ${
+              className={classNames('m-auto flex-grow w-full transition-all', {
                 !fullWidth ? "max-w-2xl px-4" : "px-4 md:px-24"
               }`}
             >
           {children}
         </main>
-        <div className="flex-1 flex justify-end">
+        <div className="flex-1">
           {toc?.links?.length > 0 && (
             <SideTOC
               links={toc.links}
