@@ -7,7 +7,6 @@ import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
 import SideTOC from '~/components/SideTOC';  // 導入 SideTOC
 import PropTypes from "prop-types";
-
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
   children: React.ReactNode;
@@ -122,11 +121,12 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         })}
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
-            <main
-              className={classNames('m-auto flex-grow w-full transition-all', {
-                !fullWidth ? "max-w-2xl px-4" : "px-4 md:px-24"
-              }`}
-            >
+        <main
+          className={classNames('m-auto flex-grow w-full transition-all', {
+            'px-4 md:px-24': fullWidth,
+            'max-w-2xl px-4': !fullWidth,
+          })}
+        >
           {children}
         </main>
         <div className="flex-1">
@@ -143,7 +143,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
     </div>
   );
 };
-
 Container.propTypes = {
   children: PropTypes.node,
 };
