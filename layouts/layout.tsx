@@ -103,9 +103,13 @@ useEffect(() => {
       level: element.localName?.substring(1) || "",
     })
   );
-  const level =
-    [...linksArr].sort((a, b) => (a.level ? parseInt(a.level) : 0) - (b.level ? parseInt(b.level) : 0))[0]?.level ?? "2";
-  setLinks({ links: linksArr, minLevel: linksArr.length > 0 ? linksArr.length : 2 });
+  
+  const level = linksArr.reduce((min, link) => {
+    const linkLevel = link.level ? parseInt(link.level) : 0;
+    return linkLevel < min ? linkLevel : min;
+  }, 2);
+  
+  setLinks({ links: linksArr, minLevel: linksArr.length > 0 ? level : 2 });
 }, []);
 
 
