@@ -91,7 +91,7 @@ export const Layout: React.VFC<Props> = ({
     </article>
   );
 
-  const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
+  const [links, setLinks] = useState<{ id: string | undefined; title: string; level: string; }[]>([]);
   const articleRef = useRef();
 
 useEffect(() => {
@@ -104,7 +104,7 @@ useEffect(() => {
     })
   );
   
-const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? 2;
+const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
 setLinks({ links: linksArr, minLevel: level });
 
   
