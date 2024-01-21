@@ -122,24 +122,39 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         })}
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
-        <main
-          className={classNames('m-auto flex-grow w-full transition-all', {
-            'px-4 md:px-24': fullWidth,
-            'max-w-2xl px-4': !fullWidth,
-          })}
-        >
-          {children}
-        </main>
-        <div className="flex-1">
-          {toc?.links?.length > 0 && (
-            <SideTOC
-              links={toc.links}
-              minLevel={toc.minLevel}
-              anchorName="notion-header-anchor"
-            />
-          )}
-        </div>
-        <Footer fullWidth={fullWidth} />
+        
+<main
+  className={classNames('m-auto flex-grow w-full transition-all', {
+    'px-4 md:px-24': fullWidth,
+    'max-w-2xl px-4': !fullWidth,
+  })}
+>
+  {children}
+</main>
+<div className="flex-1">
+  <div className="w-3/4 pr-8"> {/* 左側文章内容 */}
+    {toc?.links?.length > 0 && (
+      <SideTOC
+        links={toc.links}
+        minLevel={toc.minLevel}
+        anchorName="notion-header-anchor"
+      />
+    )}
+  </div>
+  <div className="w-1/4"> {/* 右側目錄 */}
+    <div className="sticky top-16"> {/* 使目錄固定在右側 */}
+      {toc?.links?.length > 0 && (
+        <SideTOC
+          links={toc.links}
+          minLevel={toc.minLevel}
+          anchorName="notion-header-anchor"
+        />
+      )}
+    </div>
+  </div>
+</div>
+<Footer fullWidth={fullWidth} />
+        
       </div>
     </div>
   );
