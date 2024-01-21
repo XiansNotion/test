@@ -94,19 +94,19 @@ export const Layout: React.VFC<Props> = ({
   const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
   const articleRef = useRef();
 
-  useEffect(() => {
-    const links = document.querySelectorAll(".notion-h");
-    const linksArr = Array.from(links).map(
-      ({ dataset, outerText, localName }) => ({
-        id: dataset.id,
-        title: outerText,
-        level: localName.substring(1),
-      })
-    );
-    const level =
-      [...linksArr].sort((a, b) => a.level - b.level)[0]?.level ?? 2;
-    setLinks({ links: linksArr, minLevel: level });
-  }, []);
+useEffect(() => {
+  const links = document.querySelectorAll(".notion-h");
+  const linksArr = Array.from(links).map(
+    (element) => ({
+      id: (element as HTMLElement).dataset.id,
+      title: element.outerText,
+      level: element.localName?.substring(1),
+    })
+  );
+  const level =
+    [...linksArr].sort((a, b) => (a.level ? parseInt(a.level) : 0) - (b.level ? parseInt(b.level) : 0))[0]?.level ?? 2;
+  setLinks({ links: linksArr, minLevel: level });
+}, []);
 
   return onlyContents ? (
     renderContents()
