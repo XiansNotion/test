@@ -122,8 +122,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         })}
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
-          <div className="flex flex-1">
-            <div className="flex-1"></div>
             <main
               className={`relative ml-auto mr-auto flex-grow w-full transition-all ${
                 !fullWidth ? "max-w-2xl px-4" : "px-4 md:px-24"
