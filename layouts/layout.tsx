@@ -99,7 +99,7 @@ useEffect(() => {
   const linksArr = Array.from(links).map(
     (element) => ({
       id: (element as HTMLElement).dataset.id,
-      title: element.outerText,
+      title: element.textContent || "", // 使用textContent属性来获取元素的文本内容
       level: element.localName?.substring(1),
     })
   );
