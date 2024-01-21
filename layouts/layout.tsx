@@ -49,13 +49,6 @@ export const Layout: React.VFC<Props> = ({
   const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
 
   useEffect(() => {
-    const elements = document.querySelectorAll(".notion-h");
-
-  // 使用 filter 過濾具有 dataset 屬性的元素
-  const filteredElements = Array.from(elements).filter(
-    (element) => 'dataset' in element
-  );
- 
     const links = document.querySelectorAll(".notion-h");
     const linksArr = Array.from(links).map(
       ({ dataset, outerText, localName }) => ({
