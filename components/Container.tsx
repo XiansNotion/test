@@ -70,7 +70,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
 
 // 在 Container 組件中接受 articleRef 作為 prop
 const Container = ({
-  layout,
   title,
   description,
   date,
