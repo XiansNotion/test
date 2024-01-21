@@ -51,11 +51,11 @@ export const Layout: React.VFC<Props> = ({
   useEffect(() => {
     const links = document.querySelectorAll(".notion-h");
     const linksArr = Array.from(links).map(
-      ({ dataset, outerText, localName }) => ({
-        id: dataset.id,
-        title: outerText,
-        level: localName.substring(1),
-      })
+//      ({ dataset, outerText, localName }) => ({
+//        id: dataset.id,
+//        title: outerText,
+//        level: localName.substring(1),
+//      })
     );
     const level =
       [...linksArr].sort((a, b) => a.level - b.level)[0]?.level ?? 2;
