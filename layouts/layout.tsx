@@ -104,13 +104,11 @@ useEffect(() => {
     })
   );
   
-  const level = linksArr.reduce((min, link) => {
-    const linkLevel = link.level ? parseInt(link.level) : 0;
-    return linkLevel < min ? linkLevel : min;
-  }, 2); // 设置默认值为 2
+  const level = [...linksArr].sort((a, b) => a.level - b.level)[0]?.level ?? 2;
+  setLinks({ links: linksArr, minLevel: level });
   
-  setLinks(() => ({ links: linksArr, minLevel: linksArr.length > 0 ? level : 2 })); // 使用函数形式设置初始状态
 }, []);
+
   
 
   return onlyContents ? (
