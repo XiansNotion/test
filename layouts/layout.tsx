@@ -91,18 +91,18 @@ export const Layout: React.VFC<Props> = ({
   );
 
   // 添加 toc 變量定義
-  const toc = post?.toc || null;
-  const links = post?.links || [];
-  const minLevel = post?.min_level || 1;
+  const toc = frontMatter?.toc || null;
+  const links = frontMatter?.links || [];
+  const minLevel = frontMatter?.min_level || 1;
 
   return onlyContents ? (
     renderContents()
   ) : (
     <Container
       layout="blog"
-      title={post.title}
-      description={post.summary}
-      date={new Date(post.createdTime).toISOString()}
+      title={frontMatter.title}
+      description={frontMatter.summary}
+      date={new Date(frontMatter.createdTime).toISOString()}
       type="article"
       toc={toc ? { links: links, minLevel: minLevel } : {}}
       fullWidth={fullWidth}
