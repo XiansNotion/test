@@ -67,31 +67,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
     );
     setAlreadySet(true);
   }, [alreadySet, meta]);
-
-// 在 Container 組件中接受 articleRef 作為 prop
-const Container = ({
-  title,
-  description,
-  date,
-  type,
-  toc,
-  fullWidth,
-  slug,
-  articleRef, // 新增 articleRef prop
-  children,
-}) => {
-
-  return (
-    <div
-      ref={articleRef} // 使用 articleRef 來實現滾動
-      className={classNames("container", {
-        "max-w-3xl": !fullWidth,
-        "mx-auto": !fullWidth,
-      })}
-    >
-    </div>
-  );
-};
   
   return (
     <div>
