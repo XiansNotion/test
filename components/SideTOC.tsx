@@ -52,21 +52,21 @@ const SideTOC: React.FC<SideTOCProps> = ({
     }
   }, [activeLink, _links]);
 
-//  const handleScrollDirection = () => {
-//    setActiveLink(getActiveLinkID());
-//    if (window.scrollY < visibleHeight) {
-//      setShow(false);
-//    } else {
-//      setShow(true);
-//    }
-//  };
+  const handleScrollDirection = () => {
+    setActiveLink(getActiveLinkID());
+    if (window.scrollY < visibleHeight) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  };
 
-//  useEffect(() => {
-//    window.addEventListener("scroll", handleScrollDirection);
-//    return () => {
-//      window.removeEventListener("scroll", handleScrollDirection);
-//    };
-//  }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScrollDirection);
+    return () => {
+      window.removeEventListener("scroll", handleScrollDirection);
+    };
+  }, []);
 
   if (links.length === 0) return null;
 
