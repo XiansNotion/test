@@ -13,6 +13,7 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
+import { useEffect, useRef, useState } from "react";
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
@@ -43,6 +44,25 @@ export const Layout: React.VFC<Props> = ({
   const router = useRouter();
   const { theme } = useTheme();
 
+    // 將 SideTOC 相關的代碼從原始 Layout 中複製到新的 Layout 組件中
+  const articleRef = useRef();
+  const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
+
+  useEffect(() => {
+    const links = document.querySelectorAll(".notion-h");
+    const linksArr = Array.from(links).map(
+      ({ dataset, outerText, localName }) => ({
+        id: dataset.id,
+        title: outerText,
+        level: localName.substring(1),
+      })
+    );
+    const level =
+      [...linksArr].sort((a, b) => a.level - b.level)[0]?.level ?? 2;
+    setLinks({ links: linksArr, minLevel: level });
+  }, []);
+
+  
   const renderContents = () => (
     <article>
       <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>
@@ -100,6 +120,17 @@ export const Layout: React.VFC<Props> = ({
       type="article"
       fullWidth={fullWidth}
       slug={slug}
+        // 傳遞 links 和 minLevel 狀態
+      toc={
+    post.slug !== "about"
+      ? {
+          links: links,
+          minLevel: minLevel,
+        }
+      : {}
+  }
+  // 傳遞 articleRef 給 Container 組件
+  articleRef={articleRef}
     >
       {renderContents()}
       <div
