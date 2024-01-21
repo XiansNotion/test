@@ -26,7 +26,7 @@ type Props = {
   };
 };
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta }) => {
+export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links: [], minLevel: 0 }, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
