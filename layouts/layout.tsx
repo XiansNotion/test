@@ -109,9 +109,9 @@ useEffect(() => {
     return linkLevel < min ? linkLevel : min;
   }, 2); // 设置默认值为 2
   
-  setLinks((prevState) => ({ ...prevState, links: linksArr, minLevel: linksArr.length > 0 ? level : 2 }));
+  setLinks(() => ({ links: linksArr, minLevel: linksArr.length > 0 ? level : 2 })); // 使用函数形式设置初始状态
 }, []);
-
+  
 
   return onlyContents ? (
     renderContents()
