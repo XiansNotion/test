@@ -13,6 +13,7 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
+import { useEffect, useRef, useState } from "react";
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
@@ -89,6 +90,24 @@ export const Layout: React.VFC<Props> = ({
       )}
     </article>
   );
+
+  const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
+  const articleRef = useRef();
+
+  useEffect(() => {
+    const links = document.querySelectorAll(".notion-h");
+    const linksArr = Array.from(links).map(
+      ({ dataset, outerText, localName }) => ({
+        id: dataset.id,
+        title: outerText,
+        level: localName.substring(1),
+      })
+    );
+    const level =
+      [...linksArr].sort((a, b) => a.level - b.level)[0]?.level ?? 2;
+    setLinks({ links: linksArr, minLevel: level });
+  }, []);
+
   return onlyContents ? (
     renderContents()
   ) : (
@@ -100,6 +119,14 @@ export const Layout: React.VFC<Props> = ({
       type="article"
       fullWidth={fullWidth}
       slug={slug}
+      toc={
+        post.slug !== "about"
+          ? {
+              links: links,
+              minLevel: minLevel,
+            }
+          : {}
+      }
     >
       {renderContents()}
       <div
