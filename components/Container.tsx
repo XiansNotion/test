@@ -130,7 +130,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         >
           {children}
         </main>
-        <div className="flex-1">  // 添加這個 div 包含 SideTOC 組件
+        <div className="flex-1">
           {toc?.links?.length > 0 && (
             <SideTOC
               links={toc.links}
