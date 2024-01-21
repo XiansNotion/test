@@ -105,7 +105,7 @@ useEffect(() => {
   );
   const level =
     [...linksArr].sort((a, b) => (a.level ? parseInt(a.level) : 0) - (b.level ? parseInt(b.level) : 0))[0]?.level ?? "2";
-  setLinks({ links: linksArr, minLevel: level });
+  setLinks({ links: linksArr, minLevel: linksArr.length > 0 ? linksArr.length : 2 });
 }, []);
 
 
