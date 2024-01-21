@@ -91,26 +91,22 @@ export const Layout: React.VFC<Props> = ({
     </article>
   );
 
-  const [links, setLinks] = useState<{ id: string | undefined; title: string; level: string; }[]>([]);
   const articleRef = useRef();
+  const [toc, setToc] = useState<{ links: { id: string | undefined; title: string; level: string; }[]; minLevel: number; } | undefined>(undefined);
 
-useEffect(() => {
-  const links = document.querySelectorAll(".notion-h");
-  const linksArr: { id: string | undefined; title: string; level: string; }[] = Array.from(links).map(
-    (element) => ({
-      id: (element as HTMLElement).dataset.id,
-      title: element.textContent || "",
-      level: element.localName?.substring(1) || "",
-    })
-  );
+  useEffect(() => {
+    const links = document.querySelectorAll(".notion-h");
+    const linksArr: { id: string | undefined; title: string; level: string; }[] = Array.from(links).map(
+      (element) => ({
+        id: (element as HTMLElement).dataset.id,
+        title: element.textContent || "",
+        level: element.localName?.substring(1) || "",
+      })
+    );
   
-const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
-setLinks([...linksArr]);
-
-  
-}, []);
-
-  
+    const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
+    setToc({ links: linksArr, minLevel: parseInt(level) });
+  }, []);
 
   return onlyContents ? (
     renderContents()
@@ -123,14 +119,7 @@ setLinks([...linksArr]);
       type="article"
       fullWidth={fullWidth}
       slug={slug}
-      toc={
-        post.slug !== "about"
-          ? {
-              links: links,
-              minLevel: minLevel,
-            }
-          : {}
-      }
+      toc={toc}
     >
       {renderContents()}
       <div
