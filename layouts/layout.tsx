@@ -96,17 +96,18 @@ export const Layout: React.VFC<Props> = ({
 
 useEffect(() => {
   const links = document.querySelectorAll(".notion-h");
-  const linksArr = Array.from(links).map(
+  const linksArr: { id: string | undefined; title: string; level: string; }[] = Array.from(links).map(
     (element) => ({
       id: (element as HTMLElement).dataset.id,
-      title: element.textContent || "", // 使用textContent属性来获取元素的文本内容
-      level: element.localName?.substring(1),
+      title: element.textContent || "",
+      level: element.localName?.substring(1) || "",
     })
   );
   const level =
-    [...linksArr].sort((a, b) => (a.level ? parseInt(a.level) : 0) - (b.level ? parseInt(b.level) : 0))[0]?.level ?? 2;
+    [...linksArr].sort((a, b) => (a.level ? parseInt(a.level) : 0) - (b.level ? parseInt(b.level) : 0))[0]?.level ?? "2";
   setLinks({ links: linksArr, minLevel: level });
 }, []);
+
 
   return onlyContents ? (
     renderContents()
