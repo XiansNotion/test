@@ -5,12 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
-import dynamic from "next/dynamic";
-import PropTypes from "prop-types";
-
-// 引入 SideTOC 和 Container
-const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
-
+// import BlogPost from './BlogPost'
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
   children: React.ReactNode;
@@ -23,12 +18,9 @@ type Props = {
   slug?: string | null;
   createdTime?: string;
   isTagPage?: boolean;
-  toc?: { links: any[]; minLevel: any; frontMatter: any };
 };
-
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-
-export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta }) => {
+export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
@@ -36,12 +28,15 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
     return router.pathname === (BLOG.path || '/');
   }, [router]);
   const siteUrl = useMemo(() => {
+    // tag detail page
     if (meta?.isTagPage && meta?.slug) {
       return `${url}/tag/${meta.slug}`;
     }
+    // list page
     if (!meta?.slug && !meta?.isTagPage) {
       return url;
     }
+    // detail page
     if (meta?.slug && !meta?.isTagPage) {
       return `${url}/${meta.slug}`;
     }
@@ -50,7 +45,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
   const siteTitle = useMemo(() => {
     return meta.title ?? BLOG.title;
   }, [meta]);
-  
   useEffect(() => {
     if (alreadySet || meta.type !== 'article' || !meta) return;
     setCustomMetaTags((prevCustomMetaTags) =>
@@ -67,7 +61,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
     );
     setAlreadySet(true);
   }, [alreadySet, meta]);
-  
   return (
     <div>
       <NextHeadSeo
@@ -78,6 +71,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
         og={{
           title: meta.title,
           url: siteUrl,
+          // locale: BLog.lang,
           type: meta.type ?? 'website',
           description: meta.description,
           image: getOGImageURL({
@@ -131,23 +125,8 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc, ...meta 
         >
           {children}
         </main>
-        <div className="flex-1">
-          {toc && toc.links && toc.links.length > 0 && (
-            <SideTOC
-              links={toc.links}
-              minLevel={toc.minLevel}
-              anchorName="notion-header-anchor"
-            />
-          )}
-        </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>
   );
 };
-
-Container.propTypes = {
-  children: PropTypes.node,
-};
-
-export default Container;
