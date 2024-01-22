@@ -129,7 +129,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         >
           {children}
         </main>
-        <div className="flex-1">
+        <div className="flex-1 flex justify-end">
           {toc?.links?.length > 0 && (
             <SideTOC
               links={toc.links}
