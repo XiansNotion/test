@@ -115,30 +115,31 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         }}
       />
       <div
-        className={classNames('wrapper flex', {  // 添加 flex 布局
+        className={classNames('wrapper', {
           'font-serif': BLOG.font === 'serif',
           'font-sans': BLOG.font !== 'serif',
         })}
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
-        <div className="flex flex-row w-full">  {/* 新增一個 flex 容器 */}
-          <main
-            className={classNames('m-auto flex-grow transition-all', {
-              'px-4 md:px-24': fullWidth,
-              'max-w-2xl px-4': !fullWidth,
-            })}
-          >
-            {children}
-          </main>
+        <div className="flex flex-1">
+          <div className="flex-1"></div>
+        <main
+          className={classNames('m-auto flex-grow w-full transition-all', {
+            'px-4 md:px-24': fullWidth,
+            'max-w-2xl px-4': !fullWidth,
+          })}
+        >
+          {children}
+        </main>
+        <div className="flex-1">
           {toc?.links?.length > 0 && (
-            <div className="toc-container">  {/* 為 TOC 添加一個包裹器 */}
-              <SideTOC
-                links={toc.links}
-                minLevel={toc.minLevel}
-                anchorName="notion-header-anchor"
-              />
-            </div>
+            <SideTOC
+              links={toc.links}
+              minLevel={toc.minLevel}
+              anchorName="notion-header-anchor"
+            />
           )}
+        </div>
         </div>
         <Footer fullWidth={fullWidth} />
       </div>
